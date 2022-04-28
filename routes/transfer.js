@@ -1,15 +1,7 @@
-const express = require('express')
-const app = express()
-const port = 3000
+const express = require('express');
+const router = express.Router();
+const transfersController = require("./../controllers/transfers");
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+router.get("/", transfersController.getAll);
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
-
-app.get('/transfers', (req, res) => {
-    res.send("get transfer")
-})
+module.exports = router;
