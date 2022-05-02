@@ -3,9 +3,11 @@ const getAll = (req, res) => {
         status: "succes",
         data:{
             messages: [
-                username = "username",
-                coins = "number of coins",
-                request = "get"
+                {
+                    "username" : "username",
+                    "coins" : "number of coins",
+                    "request" : "get"
+                }
             ]
         }
     }
@@ -17,9 +19,11 @@ const create = (req, res) => {
         status: "succes",
         data:{
             messages: [
-                username = "username",
-                coins = "number of coins",
-                request = "post"
+                {
+                    "username" : "username",
+                    "coins" : "number of coins",
+                    "request" : "post"
+                }
             ]
         }
     }
