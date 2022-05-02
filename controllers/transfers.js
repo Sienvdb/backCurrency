@@ -4,7 +4,22 @@ const getAll = (req, res) => {
         data:{
             messages: [
                 username = "username",
-                coins = "number of coins" 
+                coins = "number of coins",
+                request = "get"
+            ]
+        }
+    }
+    res.json(response);
+}
+
+const create = (req, res) => {
+    const response = {
+        status: "succes",
+        data:{
+            messages: [
+                username = "username",
+                coins = "number of coins",
+                request = "post"
             ]
         }
     }
@@ -12,3 +27,4 @@ const getAll = (req, res) => {
 }
 
 module.exports.getAll = getAll;
+module.exports.create = create;
