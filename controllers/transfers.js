@@ -11,4 +11,22 @@ const getAll = (req, res) => {
     res.json(response);
 }
 
+const getId = (req, res) => {
+    const id = req.params.id;
+
+    const response = {
+        status: "succes",
+        message: `Getting transfer with id ${id}`,
+        data: {
+            messages: [
+                {
+                    "username": "username",
+                    "coins": "number of coins transferd"
+                }
+            ]
+        }
+    };
+    res.json(response);
+}
+
 module.exports.getAll = getAll;
