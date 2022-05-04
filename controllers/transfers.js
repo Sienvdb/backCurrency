@@ -30,3 +30,4 @@ const getId = (req, res) => {
 }
 
 module.exports.getAll = getAll;
+module.exports.getId = getId;
