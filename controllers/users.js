@@ -1,3 +1,17 @@
+const verification = (req, res) => {
+    const response = {
+        status: "succes",
+        data:{
+            messages: [
+                {
+                    "verification" : "is verificated",
+                }
+            ]
+        }
+    }
+    res.json(response);
+}
+
 const login = (req, res) => {
     const response = {
         status: "succes",
@@ -12,4 +26,5 @@ const login = (req, res) => {
     res.json(response);
 }
 
+module.exports.verification = verification;
 module.exports.login = login;
