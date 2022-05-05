@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const transfersController = require("./../controllers/transfers");
+const transferController = require("./../controllers/transfer");
 
-router.get("/", transfersController.getAll);
-router.post("/", transfersController.create);
-router.get("/:id", transfersController.getId);
+router.get("/", transferController.getSingleTransfer);
 
 module.exports = router;
