@@ -28,6 +28,7 @@ const create = (req, res) => {
         }
     }
 }
+
 const getId = (req, res) => {
     const id = req.params.id;
 
