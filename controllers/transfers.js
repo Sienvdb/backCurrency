@@ -47,22 +47,6 @@ const getId = (req, res) => {
     res.json(response);
 }
 
-const getCoins = (req, res) => {
-    const response = {
-        status: "succes",
-        data:{
-            messages: [
-                {
-                    "username" : "username",
-                    "coins" : "number of coins",
-                }
-            ]
-        }
-    }
-    res.json(response);
-}
-
 module.exports.getAll = getAll;
 module.exports.create = create;
 module.exports.getId = getId;
-module.exports.getCoins = getCoins;

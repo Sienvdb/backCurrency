@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const transfersController = require("./../controllers/transfers");
+const leaderboardController = require("./../controllers/leaderboard");
 
-router.get("/", transfersController.getCoins);
+router.get("/", leaderboardController.getCoins);
 
 module.exports = router;
