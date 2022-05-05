@@ -1,10 +1,12 @@
 const verification = (req, res) => {
     const response = {
-        status: "succes",
+        status: "success",
         data:{
             messages: [
                 {
-                    "verification" : "is verificated",
+                    "username" : "username",
+                    "coins": "coins",
+                    "transactions": "latest transactions"
                 }
             ]
         }
@@ -14,7 +16,7 @@ const verification = (req, res) => {
 
 const login = (req, res) => {
     const response = {
-        status: "succes",
+        status: "success",
         data:{
             messages: [
                 {
