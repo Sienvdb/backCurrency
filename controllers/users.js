@@ -14,6 +14,20 @@ const verification = (req, res) => {
     res.json(response);
 }
 
+const signup = (req, res) => {
+    const response = {
+        status: "succes",
+        data:{
+            messages: [
+                {
+                    "message" : "Signed in!",
+                }
+            ]
+        }
+    }
+    res.json(response);
+}
+
 const login = (req, res) => {
     const response = {
         status: "success",
@@ -30,3 +44,4 @@ const login = (req, res) => {
 
 module.exports.verification = verification;
 module.exports.login = login;
+module.exports.signup = signup;
