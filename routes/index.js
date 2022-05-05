@@ -6,8 +6,4 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
-router.get('/leaderboard', (req, res, next) => {
-    res.render('leaderboard');
-});
-
 module.exports = router;
