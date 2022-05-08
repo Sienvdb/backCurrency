@@ -1,32 +1,41 @@
+const Transfer = require("../models/transfer");
+
 const getAll = (req, res) => {
-    const response = {
-        status: "succes",
-        data:{
-            messages: [
-                {
-                    "username" : "username",
-                    "coins" : "number of coins",
-                    "request" : "get"
+    Transfer.find({"username": "Marie"}, (err, docs) => {
+        if(!err){
+            const response = {
+                status: "succes",
+                data:{
+                    data:{
+                        transfer: docs
+                    }
                 }
-            ]
+            };
+            res.json(response);
         }
-    }
-    res.json(response);
+    })
+    
+    
 }
 
 const create = (req, res) => {
-    const response = {
-        status: "succes",
-        data:{
-            messages: [
-                {
-                    "username" : "username",
-                    "coins" : "number of coins",
-                    "request" : "post"
+    let transfer = new Transfer();
+    transfer.message = "First transfer";
+    transfer.username = "Marie";
+    transfer.coins = "2";
+    transfer.save((err, doc) => {
+        if(!err){
+            const response = {
+                status: "succes",
+                data:{
+                    transfer: doc
                 }
-            ]
+            }; res.json(response);
         }
-    }
+    })
+    
+    
+    
 }
 
 const getId = (req, res) => {

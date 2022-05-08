@@ -4,9 +4,10 @@ const mongoose = require('mongoose');
 
     const transfersSchema = new Schema({
     username:  String, // String is shorthand for {type: String}
-    message: String
+    message: String,
+    coins: String,
 });
 
-const Transfer = mongoose.model('Message', transfersSchema);
+const Transfer = mongoose.model('Transfer', transfersSchema);
 
 module.exports = Transfer;
