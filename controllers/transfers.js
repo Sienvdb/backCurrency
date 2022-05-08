@@ -24,6 +24,13 @@ const create = (req, res) => {
     transfer.username = "Marie";
     transfer.coins = "2";
     transfer.save((err, doc) => {
+        if(err){
+            res.json({
+                status: "error",
+                message: "Could not make a transfer"
+            });
+        }
+
         if(!err){
             const response = {
                 status: "succes",
