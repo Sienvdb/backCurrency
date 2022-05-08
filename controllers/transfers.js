@@ -13,17 +13,22 @@ const getAll = (req, res) => {
             };
             res.json(response);
         }
-    })
-    
-    
+    })   
 }
 
 const create = (req, res) => {
     let transfer = new Transfer();
-    transfer.message = "First transfer";
-    transfer.username = "Marie";
-    transfer.coins = "2";
+    transfer.message = req.body.message;
+    transfer.username = req.body.username;
+    transfer.coins = req.body.coins;
     transfer.save((err, doc) => {
+        if(err){
+            res.json({
+                status: "error",
+                message: "Could not make a transfer"
+            });
+        }
+
         if(!err){
             const response = {
                 status: "succes",
@@ -32,10 +37,7 @@ const create = (req, res) => {
                 }
             }; res.json(response);
         }
-    })
-    
-    
-    
+    })   
 }
 
 const getId = (req, res) => {
