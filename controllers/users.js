@@ -67,18 +67,25 @@ const signup =  async (req, res) => {
     
 }
 
-const login = (req, res) => {
-    const response = {
-        status: "success",
-        data:{
-            messages: [
-                {
-                    "username" : "username",
-                }
-            ]
+const login = async (req, res) => {
+    const body = req.body;
+    const user = await User.findOne({email: body.email});
+    
+    if(user) {
+        const validatePassword = await bcrypt.compare(body.password, user.password);
+
+        if(validatePassword) {
+            res.json({
+                status: "success",
+                message: "Valid password"
+            });
+        } else {
+            res.json({
+                status: "error",
+                message: "Wrong password"
+            });
         }
     }
-    res.json(response);
 }
 
 module.exports.verification = verification;
