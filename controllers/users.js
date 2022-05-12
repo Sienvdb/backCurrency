@@ -37,24 +37,34 @@ const signup =  async (req, res) => {
 
     user.password = await bcrypt.hash(user.password, salt);
 
-    user.save((err, doc) => {
+    if(!user.email.includes("@student.thomasmore.be")) {
+        res.json({
+            status: "error",
+            message: "Email must be Thomas More email"
+        });
+    } else {
 
-        if(err){
-            res.json({
-                status: "error",
-                message: "Could not signup"
-            });
-        }
+        user.save((err, doc) => {
 
-        if(!err){
-            const response = {
-                status: "succes",
-                data:{
-                    transfer: doc
-                }
-            }; res.json(response);
-        }
-    })   
+            if(err){
+                res.json({
+                    status: "error",
+                    message: "Could not signup"
+                });
+            }
+    
+            if(!err){
+                const response = {
+                    status: "succes",
+                    data:{
+                        transfer: doc
+                    }
+                }; res.json(response);
+            }
+        })   
+    }
+
+    
 }
 
 const login = (req, res) => {
