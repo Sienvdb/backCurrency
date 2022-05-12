@@ -4,10 +4,10 @@ const getSingleTransfer = (req, res) => {
         data:{
             messages: [
                 {
-                    "from" : "person",
-                    "to": "person",
+                    "sender" : "person",
+                    "receiver": "person",
                     "coins" : "number of coins",
-                    "reason" : "reason"
+                    "message" : "reason"
                 }
             ]
         }
