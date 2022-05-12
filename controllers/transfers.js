@@ -33,8 +33,9 @@ const create = (req, res) => {
     transfer.sender = req.body.sender;
     transfer.receiver = req.body.receiver;
     transfer.coins = req.body.coins;
+    transfer.date = req.body.date;
     transfer.message = req.body.message;
-    
+
     transfer.save((err, doc) => {
         if(err){
             res.json({
