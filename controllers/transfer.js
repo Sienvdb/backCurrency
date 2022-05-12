@@ -1,7 +1,8 @@
 let Transfer = require ("../models/transfer")
 
 const getSingleTransferBySender = (req, res) => {
-Transfer.find({ "sender": 'sien'}, function (err, doc) {
+    let transferSender = req.body.sender;
+Transfer.find({ "sender": transferSender}, function (err, doc) {
     if (err){
         const response = {
             status: "error",
