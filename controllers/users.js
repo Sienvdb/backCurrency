@@ -1,3 +1,5 @@
+const User = require("../models/user");
+
 const verification = (req, res) => {
     const response = {
         status: "success",
@@ -15,17 +17,31 @@ const verification = (req, res) => {
 }
 
 const signup = (req, res) => {
-    const response = {
-        status: "succes",
-        data:{
-            messages: [
-                {
-                    "message" : "Signed in!",
-                }
-            ]
+    let user = new User();
+    
+    user.firstname = req.body.firstname;
+    user.lastname = req.body.lastname;
+    user.username = req.body.username;
+    user.email = req.body.email;
+    user.password = req.body.password;
+
+    user.save((err, doc) => {
+        if(err){
+            res.json({
+                status: "error",
+                message: "Could not signup"
+            });
         }
-    }
-    res.json(response);
+
+        if(!err){
+            const response = {
+                status: "succes",
+                data:{
+                    transfer: doc
+                }
+            }; res.json(response);
+        }
+    })   
 }
 
 const login = (req, res) => {
