@@ -25,7 +25,16 @@ const signup = (req, res) => {
     user.email = req.body.email;
     user.password = req.body.password;
 
+    if (user.firstname == "" , user.lastname == "", user.password == "") {
+        res.json({
+            status: "error",
+            message: "Field can't be empty"
+        });
+    }
+
     user.save((err, doc) => {
+
+
         if(err){
             res.json({
                 status: "error",
