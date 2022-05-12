@@ -82,7 +82,7 @@ const login = async (req, res) => {
         } else {
             res.json({
                 status: "error",
-                message: "Wrong password"
+                message: "Password is incorrect"
             });
         }
     } else {
