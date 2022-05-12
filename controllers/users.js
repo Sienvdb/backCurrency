@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const bcrypt = require("bcrypt");
 
 const verification = (req, res) => {
     const response = {
@@ -16,7 +17,7 @@ const verification = (req, res) => {
     res.json(response);
 }
 
-const signup = (req, res) => {
+const signup =  async (req, res) => {
     let user = new User();
     
     user.firstname = req.body.firstname;
@@ -25,7 +26,19 @@ const signup = (req, res) => {
     user.email = req.body.email;
     user.password = req.body.password;
 
+    if (user.firstname == "" , user.lastname == "", user.email == "", user.password == "") {
+        res.json({
+            status: "error",
+            message: "Field can't be empty"
+        });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+
+    user.password = await bcrypt.hash(user.password, salt);
+
     user.save((err, doc) => {
+
         if(err){
             res.json({
                 status: "error",
