@@ -40,7 +40,7 @@ const signup =  async (req, res) => {
     if(!user.email.includes("@student.thomasmore.be")) {
         res.json({
             status: "error",
-            message: "Email most be thomasmore"
+            message: "Email must be Thomas More email"
         });
     } else {
 
