@@ -5,7 +5,8 @@ const mongoose = require('mongoose');
     const transfersSchema = new Schema({
         sender:  String, 
         receiver: String,
-        coins: String,
+        coins: Number,
+        date: Date,
         message:{
             type: String,
             required: true,
