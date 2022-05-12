@@ -33,10 +33,13 @@ const signup =  async (req, res) => {
         });
     }
 
+    //generate salt to hash password
     const salt = await bcrypt.genSalt(10);
 
+    //set user password to hashed password
     user.password = await bcrypt.hash(user.password, salt);
 
+    //check to make sure email is Thomas More email
     if(!user.email.includes("@student.thomasmore.be")) {
         res.json({
             status: "error",
@@ -72,6 +75,7 @@ const login = async (req, res) => {
     const user = await User.findOne({email: body.email});
     
     if(user) {
+        //check if user password and hashed password are the same
         const validatePassword = await bcrypt.compare(body.password, user.password);
 
         if(validatePassword) {
