@@ -85,6 +85,11 @@ const login = async (req, res) => {
                 message: "Wrong password"
             });
         }
+    } else {
+        res.json({
+            status: "error",
+            message: "No user found with this email"
+        });
     }
 }
 
