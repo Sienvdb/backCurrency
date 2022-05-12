@@ -1,7 +1,7 @@
 const Transfer = require("../models/transfer");
 
 const getAll = (req, res) => {
-    Transfer.find({"username": "Marie"}, (err, docs) => {
+    Transfer.find({"sender": "Marie"}, (err, docs) => {
         if(!err){
             const response = {
                 status: "succes",
@@ -18,9 +18,12 @@ const getAll = (req, res) => {
 
 const create = (req, res) => {
     let transfer = new Transfer();
-    transfer.message = req.body.message;
-    transfer.username = req.body.username;
+    
+    transfer.sender = req.body.sender;
+    transfer.receiver = req.body.receiver;
     transfer.coins = req.body.coins;
+    transfer.message = req.body.message;
+    
     transfer.save((err, doc) => {
         if(err){
             res.json({
