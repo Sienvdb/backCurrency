@@ -1,13 +1,13 @@
 let Transfer = require ("../models/transfer")
 
-const getSingleTransferBySender = (req, res) => {
+const getAllTransfersBySender = (req, res) => {
     let transferSender = req.body.sender;
-Transfer.find({ "sender": transferSender}, function (err, doc) {
+    Transfer.find({ "sender": transferSender}, function (err, docs) {
     if (err){
         const response = {
             status: "error",
             data:{
-                transfer: doc
+                transfer: docs
             }        
         }
         res.json(response);
@@ -16,10 +16,10 @@ Transfer.find({ "sender": transferSender}, function (err, doc) {
         const response = {
             status: "success",
             data:{
-                transfer: doc
+                transfer: docs
             }        
         }
-        console.log("First function call : ", doc);
+        console.log("First function call : ", docs);
         res.json(response);
 
     }
@@ -28,4 +28,4 @@ Transfer.find({ "sender": transferSender}, function (err, doc) {
 
 }
 
-module.exports.getSingleTransferBySender = getSingleTransferBySender;
+module.exports.getAllTransfersBySender = getAllTransfersBySender;
