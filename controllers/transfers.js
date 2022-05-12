@@ -44,7 +44,7 @@ const create = (req, res) => {
     })   
 }
 
-const getId = (req, res) => {
+const getTransferId = (req, res) => {
     const id = req.params.id;
 
     const response = {
@@ -64,4 +64,4 @@ const getId = (req, res) => {
 
 module.exports.getAll = getAll;
 module.exports.create = create;
-module.exports.getId = getId;
+module.exports.getTransferId = getTransferId;

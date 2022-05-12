@@ -4,6 +4,6 @@ const transfersController = require("./../controllers/transfers");
 
 router.get("/", transfersController.getAll);
 router.post("/", transfersController.create);
-router.get("/:id", transfersController.getId);
+router.get("/:id", transfersController.getTransferId);
 
 module.exports = router;
