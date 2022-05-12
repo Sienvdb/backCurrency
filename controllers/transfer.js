@@ -1,18 +1,31 @@
-const getSingleTransfer = (req, res) => {
-    const response = {
-        status: "succes",
-        data:{
-            messages: [
-                {
-                    "from" : "person",
-                    "to": "person",
-                    "coins" : "number of coins",
-                    "reason" : "reason"
-                }
-            ]
+let Transfer = require ("../models/transfer")
+
+const getAllTransfersBySender = (req, res) => {
+    let transferSender = req.body.sender;
+    Transfer.find({ "sender": transferSender}, function (err, docs) {
+    if (err){
+        const response = {
+            status: "error",
+            data:{
+                transfer: docs
+            }        
         }
+        res.json(response);
     }
-    res.json(response);
+    else{
+        const response = {
+            status: "success",
+            data:{
+                transfer: docs
+            }        
+        }
+        console.log("First function call : ", docs);
+        res.json(response);
+
+    }
+
+});
+
 }
 
-module.exports.getSingleTransfer = getSingleTransfer;
+module.exports.getAllTransfersBySender = getAllTransfersBySender;
