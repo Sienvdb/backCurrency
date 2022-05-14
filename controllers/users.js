@@ -26,6 +26,12 @@ const signup =  async (req, res) => {
     user.email = req.body.email;
     user.password = req.body.password;
 
+    if(user.password == "") {
+        return res.json({
+            status: "error",
+            message: "Password can't be empty"
+        });
+    } 
     //generate salt to hash password
     const salt = await bcrypt.genSalt(10);
 
