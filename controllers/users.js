@@ -26,13 +26,33 @@ const signup =  async (req, res) => {
     user.email = req.body.email;
     user.password = req.body.password;
 
-    if (user.firstname == "" , user.lastname == "", user.email == "", user.password == "") {
+    if (user.firstname == "") {
         res.json({
             status: "error",
-            message: "Field can't be empty"
+            message: "Firstname can't be empty"
         });
     }
 
+    if (user.lastname == "") {
+        res.json({
+            status: "error",
+            message: "Lastname can't be empty"
+        });
+    }
+
+    if (user.username == "") {
+        res.json({
+            status: "error",
+            message: "Username can't be empty"
+        });
+    }
+
+    if (user.password == "") {
+        res.json({
+            status: "error",
+            message: "Password can't be empty"
+        });
+    }
     //generate salt to hash password
     const salt = await bcrypt.genSalt(10);
 
@@ -43,7 +63,7 @@ const signup =  async (req, res) => {
     if(!user.email.includes("@student.thomasmore.be")) {
         res.json({
             status: "error",
-            message: "Email must be Thomas More email"
+            message: "Email must contain @student.thomasmore.be"
         });
     } else {
 
