@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var leaderboardRouter = require('./routes/leaderboard');
@@ -25,6 +26,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(cors());
 app.use('/api/v1', usersRouter )
 app.use('/', indexRouter);
 app.use('/api/v1/leaderboard', leaderboardRouter);
