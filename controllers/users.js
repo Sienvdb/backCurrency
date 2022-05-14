@@ -58,7 +58,7 @@ const signup =  async (req, res) => {
     
             if(!err){
                 const response = {
-                    status: "succes",
+                    status: "success",
                     data:{
                         transfer: doc
                     }
