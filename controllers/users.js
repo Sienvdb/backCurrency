@@ -1,5 +1,7 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const { token } = require("morgan");
+const jwt = require("jsonwebtoken");
 
 const verification = (req, res) => {
     const response = {
@@ -44,24 +46,24 @@ const signup =  async (req, res) => {
         });
     } else {
 
-        user.save((err, doc) => {
-
-            if(err){
+        user.save().then(result => {
+                let token = jwt.sign({
+                    uid: result._id, 
+                    username: result.username
+                }, "SecretWord");
+                res.json({
+                    status: "succes",
+                    data:{
+                        token: token,
+                    }
+                });
+        }).catch(error => {    
                 res.json({
                     status: "error",
                     message: "Could not signup"
                 });
-            }
     
-            if(!err){
-                const response = {
-                    status: "succes",
-                    data:{
-                        transfer: doc
-                    }
-                }; res.json(response);
-            }
-        })   
+        })
     }
 
     
