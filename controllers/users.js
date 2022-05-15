@@ -51,7 +51,7 @@ const signup =  async (req, res) => {
             if(err){
                 res.json({
                     status: "error",
-                    message: "Could not signup"
+                    message: "Could not signup, check if all input fields are filled in"
                 });
             }
     
