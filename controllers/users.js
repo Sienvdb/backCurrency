@@ -51,10 +51,12 @@ const signup =  async (req, res) => {
                     uid: result._id, 
                     username: result.username
                 }, "SecretWord");
+
+                console.log(result)
                 res.json({
                     status: "succes",
                     data:{
-                        token: token,
+                        "token": token,
                     }
                 });
         }).catch(error => {    
@@ -94,6 +96,7 @@ const login = async (req, res) => {
         });
     }
 }
+
 
 module.exports.verification = verification;
 module.exports.login = login;
