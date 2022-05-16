@@ -13,7 +13,7 @@ const getIdFromJWT = (req) => {
     return decoded.uid;
 }
 
-const getAllById = (req, res) => {
+const getAllTransfersByToken = (req, res) => {
 
     let token = getIdFromJWT(req);
     let transferFirstname = req.body.Id;
@@ -89,7 +89,7 @@ const getTransferId = (req, res) => {
     res.json(response);
 }
 
-module.exports.getAllById = getAllById;
+module.exports.getAllTransfersByToken = getAllTransfersByToken;
 module.exports.create = create;
 module.exports.getTransferId = getTransferId;
 
