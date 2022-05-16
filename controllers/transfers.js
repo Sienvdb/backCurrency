@@ -72,20 +72,30 @@ const create = (req, res) => {
 
 const getTransferId = (req, res) => {
     const id = req.params.id;
-
-    const response = {
-        status: "succes",
-        message: `Getting transfer with id ${id}`,
-        data: {
-            messages: [
-                {
-                    "username": "username",
-                    "coins": "number of coins transferd"
-                }
-            ]
+    
+    Transfer.find({ _id: id}, function (err, docs) {
+        if (err){
+            const response = {
+                status: "error",
+                data:{
+                    transfer: docs
+                }        
+            }
+            res.json(response);
         }
-    };
-    res.json(response);
+        else{
+            const response = {
+                status: "success",
+                data:{
+                    transfer: docs
+                }        
+            }
+            console.log("First function call : ", docs);
+            res.json(response);
+    
+        }
+    
+    });
 }
 
 module.exports.getAllTransfersByToken = getAllTransfersByToken;
