@@ -1,7 +1,7 @@
 const Transfer = require("../models/transfer");
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
-
+//test token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MjgwZWQ1ODFmODg2MjljMTc3OGI4NTQiLCJ1c2VybmFtZSI6InNpZW52ZGIiLCJpYXQiOjE2NTI3MDQ0MjJ9.-MdkkdeE8Vgncc7UiVeOOb4883n7MijtrcRszxLKuo4
 const getIdFromJWT = (req) => {
     if (req.headers.authorization.startsWith("Bearer ")) {
         token = req.headers.authorization.substring(7, req.headers.authorization.length);
@@ -15,12 +15,9 @@ const getIdFromJWT = (req) => {
 
 const getAllTransfersByToken = (req, res) => {
 
-    let token = getIdFromJWT(req);
-    let transferFirstname = req.body.Id;
-    let transferLastname = req.body.lastname;
+    let tokenId = getIdFromJWT(req);
     //db.getCollection('users').find({"_id": "ObjectId(627cd0f54ce67d82eeb46f6b)" }
-    Transfer.find({"senderId": token}, (err, docs) => {
-        let sender = req.params.username;
+    Transfer.find({senderId: tokenId}, function (err, docs) {
         if (err){
             const response = {
                 status: "error",
@@ -47,6 +44,7 @@ const create = (req, res) => {
     let transfer = new Transfer();
     
     transfer.sender = req.body.sender;
+    transfer.senderId = req.body.senderId;
     transfer.receiver = req.body.receiver;
     transfer.coins = req.body.coins;
     transfer.date = req.body.date;
