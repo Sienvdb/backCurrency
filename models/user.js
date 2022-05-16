@@ -1,6 +1,7 @@
 //make connection with mongoDB
 const mongoose = require('mongoose');
-    const Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
+const passportLocalMongoose = require('passport-local-mongoose');
 
     const userSchema = new Schema({
         firstname:{
@@ -25,6 +26,7 @@ const mongoose = require('mongoose');
         },
         coins: Number
 });
+userSchema.plugin(passportLocalMongoose);
 
 const User = mongoose.model('User', userSchema);
 

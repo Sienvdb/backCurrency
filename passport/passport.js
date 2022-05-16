@@ -1,5 +1,7 @@
+
 const passport = require('passport');
 const User = require('../models/user');
+
 
 //webtoken
 var JwtStrategy = require('passport-jwt').Strategy,

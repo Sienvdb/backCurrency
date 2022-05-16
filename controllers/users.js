@@ -48,10 +48,7 @@ const signup =  async (req, res) => {
     } else {
 
         user.save().then(result => {
-                let token = jwt.sign({
-                    uid: result._id, 
-                    username: result.username
-                }, "SecretWord");
+
 
                 console.log(result)
                 res.json({
@@ -75,14 +72,11 @@ const signup =  async (req, res) => {
 const login = async (req, res) => {
     const body = req.body;
     const user = await User.findOne({email: body.email});
-    console.log("ok1");
     if(user) {
         //check if user password and hashed password are the same
         const validatePassword = await bcrypt.compare(body.password, user.password);
-        console.log("ok2");
 
         if(validatePassword) {
-            console.log("ok3");
             let token = jwt.sign({
                 uid: user._id, 
                 username: user.username
@@ -94,7 +88,6 @@ const login = async (req, res) => {
                 token: token
             });
         } else {
-            console.log("ok4");
 
             res.json({
                 status: "error",
@@ -102,7 +95,6 @@ const login = async (req, res) => {
             });
         }
     } else {
-        console.log("ok5");
 
         res.json({
             status: "error",
