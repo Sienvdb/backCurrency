@@ -28,8 +28,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/v1', usersRouter );
 app.use('/', indexRouter);
-app.use('/api/v1/leaderboard', leaderboardRouter);
-app.use('/api/v1/transfer', transferRouter);
+app.use('/api/v1/leaderboard',passport.authenticate('jwt', {session: false}), leaderboardRouter);
+app.use('/api/v1/transfer', passport.authenticate('jwt', {session: false}), transferRouter);
 app.use('/api/v1/transfers', passport.authenticate('jwt', {session: false}), transfersRouter);
 app.use('/api/v1/users', usersRouter);
 
