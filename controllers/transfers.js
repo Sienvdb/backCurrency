@@ -1,21 +1,27 @@
 const Transfer = require("../models/transfer");
 const User = require("../models/user");
+const jwt = require("jsonwebtoken");
+
+const getIdFromJWT = (req) => {
+    if (req.headers.authorization.startsWith("Bearer ")) {
+        token = req.headers.authorization.substring(7, req.headers.authorization.length);
+    } else {
+        return false;
+    }
+
+    const decoded = jwt.verify(token, "SecretWord");//config.get('jwt.secret'));
+    return decoded.uid;
+}
 
 const getAllById = (req, res) => {
+
+    let token = getIdFromJWT(req);
     let transferFirstname = req.body.Id;
     let transferLastname = req.body.lastname;
-    Transfer.find({"sender._id": transferFirstname}, (err, docs) => {
-        if(!err){
-            const response = {
-                status: "succes",
-                data:{
-                    data:{
-                        transfer: docs
-                    }
-                }
-            };
-            res.json(response);
-        }else{
+    //db.getCollection('users').find({"_id": "ObjectId(627cd0f54ce67d82eeb46f6b)" }
+    Transfer.find({"senderId": token}, (err, docs) => {
+        let sender = req.params.username;
+        if (err){
             const response = {
                 status: "error",
                 data:{
@@ -24,8 +30,18 @@ const getAllById = (req, res) => {
             }
             res.json(response);
         }
-    })   
-}
+        else{
+                const response = {
+                    status: "success",
+                    data:{
+                        transfer: docs
+                    }        
+                }
+                console.log("First function call : ", docs);
+                res.json(response);
+            }
+        })
+        }
 
 const create = (req, res) => {
     let transfer = new Transfer();
@@ -76,3 +92,6 @@ const getTransferId = (req, res) => {
 module.exports.getAllById = getAllById;
 module.exports.create = create;
 module.exports.getTransferId = getTransferId;
+
+// transfer heeft sender_id en reciever_id
+// get all transfers waar sender_id of reciever_id de id van een user zijn
