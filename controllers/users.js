@@ -25,6 +25,7 @@ const signup =  async (req, res) => {
     user.username = req.body.username;
     user.email = req.body.email;
     user.password = req.body.password;
+    user.coins = 100;
 
     if(user.password == "") {
         return res.json({
