@@ -46,6 +46,7 @@ const create = (req, res) => {
     transfer.sender = req.body.sender;
     transfer.senderId = req.body.senderId;
     transfer.receiver = req.body.receiver;
+    transfer.receiverId = req.body.receiverId
     transfer.coins = req.body.coins;
     transfer.date = req.body.date;
     transfer.message = req.body.message;
