@@ -66,19 +66,7 @@ const signup =  async (req, res) => {
                     message: "Could not signup, check if all input fields are filled in"
                 });
     
-<<<<<<< HEAD
         })
-=======
-            if(!err){
-                const response = {
-                    status: "success",
-                    data:{
-                        transfer: doc
-                    }
-                }; res.json(response);
-            }
-        })   
->>>>>>> 5d4887a3fec5132322105dd30ee14ae92db6a251
     }
 
     
