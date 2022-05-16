@@ -5,6 +5,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const passport = require('./passport/passport');
+const cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var leaderboardRouter = require('./routes/leaderboard');
@@ -26,7 +27,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api/v1', usersRouter );
+app.use(cors());
+app.use('/api/v1', usersRouter )
 app.use('/', indexRouter);
 app.use('/api/v1/leaderboard',passport.authenticate('jwt', {session: false}), leaderboardRouter);
 app.use('/api/v1/transfer', passport.authenticate('jwt', {session: false}), transferRouter);
