@@ -59,7 +59,7 @@ const signup =  async (req, res) => {
 
                 console.log(result)
                 res.json({
-                    status: "succes",
+                    status: "success",
                     data:{
                         "token": token,
                     }
