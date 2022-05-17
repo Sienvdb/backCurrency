@@ -13,7 +13,7 @@ var transferRouter = require('./routes/transfer');
 var transfersRouter = require('./routes/transfers');
 var usersRouter = require('./routes/users');
 
-mongoose.connect('mongodb://localhost:27017/currencyapp');
+mongoose.connect('mongodb+srv://adminCurrency:9876adminCurrency54321@backcurrency.rnyv1.mongodb.net/?retryWrites=true&w=majority');
 var app = express();
 const port = process.env.PORT || 3001;
 
