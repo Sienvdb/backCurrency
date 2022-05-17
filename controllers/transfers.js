@@ -49,6 +49,7 @@ const create = (req, res) => {
     transfer.receiverId = req.body.receiverId
     transfer.coins = req.body.coins;
     transfer.date = req.body.date;
+    transfer.reason = req.body.reason;
     transfer.message = req.body.message;
 
     transfer.save((err, doc) => {

@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
         receiverId: String,
         coins: Number,
         date: Date,
+        reason: String,
         message:{
             type: String,
             required: true,

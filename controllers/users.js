@@ -51,7 +51,11 @@ const signup =  async (req, res) => {
     } else {
 
         user.save().then(result => {
-
+            let token = jwt.sign({
+                uid: user._id, 
+                username: user.username
+            }, "SecretWord");
+        
 
                 console.log(result)
                 res.json({
