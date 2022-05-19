@@ -32,7 +32,7 @@ app.use('/api/v1', usersRouter )
 app.use('/', indexRouter);
 app.use('/api/v1/leaderboard',passport.authenticate('jwt', {session: false}), leaderboardRouter);
 app.use('/api/v1/transfer', passport.authenticate('jwt', {session: false}), transferRouter);
-app.use('/api/v1/transfers', passport.authenticate('jwt', {session: false}), transfersRouter);
+app.use('/api/v1/', passport.authenticate('jwt', {session: false}), transfersRouter);
 app.use('/api/v1/users', usersRouter);
 
 // catch 404 and forward to error handler

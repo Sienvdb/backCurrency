@@ -100,9 +100,38 @@ const getTransferId = (req, res) => {
     });
 }
 
+const getCoins = (req, res) => {
+    let tokenId = getIdFromJWT(req);
+    
+    if(!tokenId) {
+        return res.json({
+            status: "error",
+            message: "No user found with this token"
+        });
+    }
+
+    User.findOne({ _id: tokenId}, function (err, docs) {
+        if (!err) {
+            return res.json({
+                "status": "success",
+                "data": {
+                    "coins": docs.coins,
+                }
+            });
+        } else {
+            return res.json({
+                "status": "error",
+                "message": "Error getting users coins",
+            });
+        }
+    });
+
+}
+
 module.exports.getAllTransfersByToken = getAllTransfersByToken;
 module.exports.create = create;
 module.exports.getTransferId = getTransferId;
+module.exports.getCoins = getCoins;
 
 // transfer heeft sender_id en reciever_id
 // get all transfers waar sender_id of reciever_id de id van een user zijn
