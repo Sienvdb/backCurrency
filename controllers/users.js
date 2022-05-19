@@ -133,8 +133,9 @@ const getCoins = (req, res) => {
 
 const getValuesByToken = async (req, res) => {
     // Get token value to the json body
-    const token = req.body.token;
- 
+    const token = req.headers.authorization.substring(7, req.headers.authorization.length);
+    console.log(token)
+    console.log("ok")
     // If the token is present
     if(token){
  
