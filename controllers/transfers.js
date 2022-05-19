@@ -12,7 +12,8 @@ const getIdFromJWT = (req) => {
     const decoded = jwt.verify(token, "SecretWord");//config.get('jwt.secret'));
     return decoded.uid;
 }
-
+//jwt.verify(token, "secretWord"
+//.send(data))
 const getAllTransfersByToken = (req, res) => {
 
     let tokenId = getIdFromJWT(req);
