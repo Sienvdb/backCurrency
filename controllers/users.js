@@ -105,23 +105,29 @@ const login = async (req, res) => {
 
 const getCoins = (req, res) => {
     let tokenId = getIdFromJWT(req);
-    const user = User.find({ _id: tokenId});
-
-    if(user) {
-        let coins = user.coins;
-
-        return res.json({
-            status: "success",
-            data:{
-                "coins": coins,
-            }
-        });
-    } else {
+    
+    if(!tokenId) {
         return res.json({
             status: "error",
-            message: "No coins found"
+            message: "No user found with this token"
         });
     }
+
+    User.findOne({ _id: tokenId}, function (err, docs) {
+        if (!err) {
+            return res.json({
+                "status": "success",
+                "data": {
+                    "coins": docs.coins,
+                }
+            });
+        } else {
+            return res.json({
+                "status": "error",
+                "message": "Error getting users coins",
+            });
+        }
+    });
 
 }
 
