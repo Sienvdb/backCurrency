@@ -4,20 +4,15 @@ const { token } = require("morgan");
 const jwt = require("jsonwebtoken");
 const passport = require('passport');
 
-const verification = (req, res) => {
-    const response = {
-        status: "success",
-        data:{
-            messages: [
-                {
-                    "username" : "username",
-                    "coins": "coins",
-                    "transactions": "latest transactions"
-                }
-            ]
-        }
+const getIdFromJWT = (req) => {
+    if (req.headers.authorization.startsWith("Bearer ")) {
+        token = req.headers.authorization.substring(7, req.headers.authorization.length);
+    } else {
+        return false;
     }
-    res.json(response);
+
+    const decoded = jwt.verify(token, "SecretWord");//config.get('jwt.secret'));
+    return decoded.uid;
 }
 
 const signup =  async (req, res) => {
@@ -111,21 +106,28 @@ const login = async (req, res) => {
 }
 
 const getCoins = (req, res) => {
-    const response = {
-        status: "succes",
-        data:{
-            messages: [
-                {
-                    "username" : "username",
-                    "coins" : "number of coins",
-                }
-            ]
-        }
+    let tokenId = getIdFromJWT(req);
+    const user = User.find({ _id: tokenId});
+
+    if(user) {
+        let coins = user.coins;
+
+        res.json({
+            status: "success",
+            data:{
+                "coins": coins,
+            }
+        });
+    } else {
+        res.json({
+            status: "error",
+            message: "No coins found"
+        });
     }
-    res.json(response);
+
 }
 
-module.exports.verification = verification;
+
 module.exports.login = login;
 module.exports.signup = signup;
 module.exports.getCoins = getCoins;
