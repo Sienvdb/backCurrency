@@ -110,14 +110,14 @@ const getCoins = (req, res) => {
     if(user) {
         let coins = user.coins;
 
-        res.json({
+        return res.json({
             status: "success",
             data:{
                 "coins": coins,
             }
         });
     } else {
-        res.json({
+        return res.json({
             status: "error",
             message: "No coins found"
         });
