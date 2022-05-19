@@ -153,8 +153,5 @@ const getValuesByToken = async (req, res) => {
 
 module.exports.login = login;
 module.exports.signup = signup;
-<<<<<<< HEAD
 module.exports.getValuesByToken = getValuesByToken;
-=======
 module.exports.getCoins = getCoins;
->>>>>>> 492821735d95f3ed08195a09e4f18cd1b6ad0e48
