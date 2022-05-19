@@ -4,20 +4,15 @@ const { token } = require("morgan");
 const jwt = require("jsonwebtoken");
 const passport = require('passport');
 
-const verification = (req, res) => {
-    const response = {
-        status: "success",
-        data:{
-            messages: [
-                {
-                    "username" : "username",
-                    "coins": "coins",
-                    "transactions": "latest transactions"
-                }
-            ]
-        }
+const getIdFromJWT = (req) => {
+    if (req.headers.authorization.startsWith("Bearer ")) {
+        token = req.headers.authorization.substring(7, req.headers.authorization.length);
+    } else {
+        return false;
     }
-    res.json(response);
+
+    const decoded = jwt.verify(token, "SecretWord");//config.get('jwt.secret'));
+    return decoded.uid;
 }
 
 const signup =  async (req, res) => {
@@ -108,44 +103,26 @@ const login = async (req, res) => {
     }
 }
 
-const login2 = async (req, res) => {
-    const body= req.body;
-    const user = await User.authenticate()(req.body.username, req.body.password).then(result => {
-        console.log(User);
-        console.log(result);
-        console.log(result.user);
-        console.log(req.body.username);
-        console.log(req.body.password);
-        if(result.user) {    
-            const validatePassword = bcrypt.compare(body.password, user.password);
-            console.log(validatePassword);
+const getCoins = (req, res) => {
+    let tokenId = getIdFromJWT(req);
+    const user = User.find({ _id: tokenId});
 
-            if(validatePassword) {
-                let token = jwt.sign({
-                    uid: result.user._id, 
-                    username: result.user.username
-                }, "SecretWord");
-    
-                return res.json({
-                    status: "success",
-                    data: {
-                        "token": token
-                    }
-                });
-            } else {
-                res.json({
-                    status: "failed",
-                    message: "Wrong password"
-                });
+    if(user) {
+        let coins = user.coins;
+
+        res.json({
+            status: "success",
+            data:{
+                "coins": coins,
             }
-        } else {
-            res.json({
-                status: "failed",
-                message: "No user found with this email"
-            });
-        }    
-    });
-    
+        });
+    } else {
+        res.json({
+            status: "error",
+            message: "No coins found"
+        });
+    }
+
 }
 
 const getValuesByToken = async (req, res) => {
@@ -174,7 +151,10 @@ const getValuesByToken = async (req, res) => {
 };
 
 
-module.exports.verification = verification;
 module.exports.login = login;
 module.exports.signup = signup;
+<<<<<<< HEAD
 module.exports.getValuesByToken = getValuesByToken;
+=======
+module.exports.getCoins = getCoins;
+>>>>>>> 492821735d95f3ed08195a09e4f18cd1b6ad0e48
