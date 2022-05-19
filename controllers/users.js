@@ -110,47 +110,22 @@ const login = async (req, res) => {
     }
 }
 
-const login2 = async (req, res) => {
-    const body= req.body;
-    const user = await User.authenticate()(req.body.username, req.body.password).then(result => {
-        console.log(User);
-        console.log(result);
-        console.log(result.user);
-        console.log(req.body.username);
-        console.log(req.body.password);
-        if(result.user) {    
-            const validatePassword = bcrypt.compare(body.password, user.password);
-            console.log(validatePassword);
-
-            if(validatePassword) {
-                let token = jwt.sign({
-                    uid: result.user._id, 
-                    username: result.user.username
-                }, "SecretWord");
-    
-                return res.json({
-                    status: "success",
-                    data: {
-                        "token": token
-                    }
-                });
-            } else {
-                res.json({
-                    status: "failed",
-                    message: "Wrong password"
-                });
-            }
-        } else {
-            res.json({
-                status: "failed",
-                message: "No user found with this email"
-            });
-        }    
-    });
-    
+const getCoins = (req, res) => {
+    const response = {
+        status: "succes",
+        data:{
+            messages: [
+                {
+                    "username" : "username",
+                    "coins" : "number of coins",
+                }
+            ]
+        }
+    }
+    res.json(response);
 }
-
 
 module.exports.verification = verification;
 module.exports.login = login;
 module.exports.signup = signup;
+module.exports.getCoins = getCoins;
