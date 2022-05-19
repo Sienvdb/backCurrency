@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('./passport/passport');
+const passport = require('./../passport/passport');
 const transfersController = require("./../controllers/transfers");
 
 router.get("/transfers", transfersController.getAllTransfersByToken);
