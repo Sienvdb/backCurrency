@@ -52,6 +52,7 @@ const create = (req, res) => {
     transfer.date = req.body.date;
     transfer.reason = req.body.reason;
     transfer.message = req.body.message;
+    transfer.date = Date.now();
 
     transfer.save((err, doc) => {
         if(err){
