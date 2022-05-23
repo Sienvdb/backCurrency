@@ -92,7 +92,33 @@ const login = async (req, res) => {
     }
 }
 
+const getIdByUsername = async (req, res) => {
+    const username = req.body.username;
+    console.log("user")
+    User.findOne({ username: username}, function (err, docs) {
+        console.log(docs._id)
 
+        if (err){
+            const response = {
+                status: "error",
+                data:{
+                    transfer: docs
+                }        
+            }
+            res.json(response);
+        }
+        else{
+            return res.json({
+                "status": "success",
+                "data": {
+                    "id": docs._id,
+                }
+            });
+            res.json(response);
+        }
+    })
+
+}
 
 const getValuesByToken = async (req, res) => {
     // Get token value to the json body
@@ -112,7 +138,7 @@ const getValuesByToken = async (req, res) => {
         });
     }else{
  
-        // Return response with error
+        // Return response with errorreq.headers.authorization.substring
         res.json({
             login: false,
             data: 'error'
@@ -123,5 +149,6 @@ const getValuesByToken = async (req, res) => {
 
 module.exports.login = login;
 module.exports.signup = signup;
+module.exports.getIdByUsername = getIdByUsername;
 module.exports.getValuesByToken = getValuesByToken;
 
