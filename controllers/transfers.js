@@ -103,7 +103,7 @@ const getTransferId = (req, res) => {
 
 const getCoins = (req, res) => {
     let tokenId = getIdFromJWT(req);
-    console.log(tokenId);
+
 
     if(!tokenId) {
         return res.json({

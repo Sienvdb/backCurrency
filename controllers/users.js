@@ -94,9 +94,7 @@ const login = async (req, res) => {
 
 const getIdByUsername = async (req, res) => {
     const username = req.params.username;
-    console.log(username)
     User.findOne({ username: username}, function (err, docs) {
-        console.log(docs);
         if (err){
             const response = {
                 status: "error",
