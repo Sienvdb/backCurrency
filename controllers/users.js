@@ -110,7 +110,7 @@ const getIdByUsername = async (req, res) => {
             const response =({
                 "status": "success",
                 "data": {
-                    "id": docs._id,
+                    "id": docs,
                 }
             });
             res.json(response);
