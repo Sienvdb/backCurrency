@@ -5,7 +5,7 @@ const transfersController = require("./../controllers/transfers");
 
 router.get("/transfers", transfersController.getAllTransfersByToken);
 router.post("/transfers", transfersController.create);
-router.get("transfers/:id", transfersController.getTransferId);
+router.get("/transfers/:id", transfersController.getTransferId);
 router.get("/getCoins", passport.authenticate('jwt', {session: false}), transfersController.getCoins);
 
 module.exports = router;
