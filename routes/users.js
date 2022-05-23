@@ -6,5 +6,5 @@ router.get("/:username", userController.getIdByUsername);
 router.get("/token", userController.getValuesByToken)
 router.post("/login", userController.login);
 router.post("/signup", userController.signup);
-
+ 
 module.exports = router;
