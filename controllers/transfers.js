@@ -12,6 +12,35 @@ const getIdFromJWT = (req) => {
     const decoded = jwt.verify(token, "SecretWord");//config.get('jwt.secret'));
     return decoded.uid;
 }
+
+const getCoinsFromJWT = (req) => {
+    if (req.headers.authorization.startsWith("Bearer ")) {
+        token = req.headers.authorization.substring(7, req.headers.authorization.length);
+    } else {
+        return false;
+    }
+
+    const decoded = jwt.verify(token, "SecretWord");//config.get('jwt.secret'));
+    return decoded.coins;
+}
+/*
+{
+    "sender" : "sienie",
+    "senderId" : 5,
+    "receiver" : "Marie",
+    "receiverId" : 6,
+    "coins": 120,
+    "reason" : "blbla" ,
+    "message": "blabla",
+    "date" :"nu"
+
+}
+
+    "firstname":"sien",
+    "lastname":"vandenbergh",
+    "username": "lolie",
+    "email":"s@student.thomasmore.be",
+    "password": "VGjyi.23"*/
 //jwt.verify(token, "secretWord"
 //.send(data))
 const getAllTransfersByToken = (req, res) => {
@@ -42,35 +71,74 @@ const getAllTransfersByToken = (req, res) => {
         }
 
 const create = (req, res) => {
-    let transfer = new Transfer();
-    
+    let senderId = getIdFromJWT(req);
+    let senderCoins = getCoinsFromJWT(req);
+    console.log(senderCoins);
+
+    if (!senderId) {
+        return res.json({
+            "status": "error",
+            "message": "You need to be logged in to make a transaction"
+        });
+    }
+
+    let transfer = new Transfer(); 
     transfer.sender = req.body.sender;
     transfer.senderId = req.body.senderId;
     transfer.receiver = req.body.receiver;
     transfer.receiverId = req.body.receiverId
     transfer.coins = req.body.coins;
-    transfer.date = req.body.date;
     transfer.reason = req.body.reason;
     transfer.message = req.body.message;
     transfer.date = Date.now();
 
-    transfer.save((err, doc) => {
-        if(err){
+    if(req.body.coins > senderCoins){
+        return res.json({
+            status: "error",
+            message: "You don't have enough coins to make such a big transfer",
+        })
+    }else{
+        console.log("ok1")
+
+        if (req.body.receiver && req.body.coins) {
+            transfer.save((err, doc) => {
+                if (!err) {
+                    User.findByIdAndUpdate(req.body.senderId, {$inc:{"coins": -req.body.coins}} , (err, doc) => {
+                        if (!err) {
+                            console.log("ok5")
+                            User.findByIdAndUpdate(req.body.receiverId, { $inc: { "coins": req.body.coins } }, (err, doc) => {
+                                if (!err) {
+                                    console.log("ok6")
+                                    res.json({
+                                        status: "success",
+                                        data:{
+                                            transfer: doc
+                                        }
+                                    });
+                                }else{
+                                    res.json({
+                                        status: "error",
+                                        message: "We couldn't find this receiver in our database."
+                                    })
+                                }
+                            });
+                        }else{
+                            res.json({
+                                status: "error",
+                                message: "We couldn't find this sender in our database."
+                            })
+                        }
+                    });
+                }
+            });
+        } else {
             res.json({
-                status: "error",
-                message: "Could not make a transfer"
+                "status": "error",
+                "message": "Please give a receiver and the number of coins you want to send.",
             });
         }
-
-        if(!err){
-            const response = {
-                status: "succes",
-                data:{
-                    transfer: doc
-                }
-            }; res.json(response);
-        }
-    })   
+    }
+  
 }
 
 const getTransferId = (req, res) => {

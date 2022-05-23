@@ -37,7 +37,8 @@ const signup =  async (req, res) => {
         user.save().then(result => {
             let token = jwt.sign({
                 uid: user._id, 
-                username: user.username
+                username: user.username,
+                coins: user.coins
             }, "SecretWord");
 
                 res.json({
@@ -68,7 +69,8 @@ const login = async (req, res) => {
         if(validatePassword) {
             let token = jwt.sign({
                 uid: user._id, 
-                username: user.username
+                username: user.username,
+                coins: user.coins
             }, "SecretWord");
         
         
