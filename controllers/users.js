@@ -146,7 +146,25 @@ const getValuesByToken = async (req, res) => {
 };
 
 const checkUsername = async (req, res) => {
-    
+    const user = User.findOne({ username: req.query.username}, function (err, docs) {
+        if (err){
+            res.json({
+                status: "error",
+                message: "Something went wrong"
+            });
+        }
+        if(user){
+            res.json({
+                status: "error",
+                message: "User already exists"
+            });
+        } else {
+            res.json({
+                status: "success",
+                message: "User doesn't exist"
+            });
+        }
+    })
 
 }
 
