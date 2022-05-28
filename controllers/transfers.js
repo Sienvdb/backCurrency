@@ -69,7 +69,6 @@ const getAllTransfersByToken = (req, res) => {
                 res.json(response);
             }
         })
-        res.send(transfers);   
         }
 
 const create = (req, res) => {
