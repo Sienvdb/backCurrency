@@ -221,6 +221,7 @@ const paginatedResults = async  (req, res, next) => {
     const transfers = await Transfer.find({$or:[{senderId: tokenId}, {receiverId: tokenId}]}).limit(limit).skip(skip);
 
     res.send({
+        status: "success",
         page, 
         size, 
         data: transfers
