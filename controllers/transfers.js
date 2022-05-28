@@ -47,18 +47,6 @@ const getAllTransfersByToken = (req, res) => {
 
     let tokenId = getIdFromJWT(req);
 
-    let {page, size} = req.query;
-
-    if(!page) {
-        page = 1;
-    }
-    if(!size) {
-        size = 5;
-    }
-
-    const limit = parseInt(size);
-    const skip = (page -1) * size;
-
     //db.getCollection('users').find({"_id": "ObjectId(627cd0f54ce67d82eeb46f6b)" }
     const transfers = Transfer.find({$or:[{senderId: tokenId}, {receiverId: tokenId}]} , function (err, docs) {
         if (err){
@@ -80,7 +68,7 @@ const getAllTransfersByToken = (req, res) => {
                 console.log("First function call : ", docs);
                 res.json(response);
             }
-        }).limit(limit).skip(skip);
+        })
         res.send(transfers);   
         }
 
