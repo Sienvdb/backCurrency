@@ -196,10 +196,43 @@ const getCoins = (req, res) => {
 
 }
 
+const paginatedResults = async  (req, res, next) => {
+    let tokenId = getIdFromJWT(req);
+
+    if(!tokenId) {
+        return res.json({
+            status: "error",
+            message: "No user found with this token"
+        });
+    }
+
+    let {page, size} = req.query;
+
+    if(!page) {
+        page = 1;
+    }
+    if(!size) {
+        size = 5;
+    }
+
+    const limit = parseInt(size);
+    const skip = (page -1) * size;
+
+    const transfers = await Transfer.find({$or:[{senderId: tokenId}, {receiverId: tokenId}]}).limit(limit).skip(skip);
+
+    res.send({
+        page, 
+        size, 
+        data: transfers
+    })
+}
+
+
 module.exports.getAllTransfersByToken = getAllTransfersByToken;
 module.exports.create = create;
 module.exports.getTransferId = getTransferId;
 module.exports.getCoins = getCoins;
+module.exports.paginatedResults = paginatedResults;
 
 // transfer heeft sender_id en reciever_id
 // get all transfers waar sender_id of reciever_id de id van een user zijn
