@@ -44,11 +44,9 @@ const getCoinsFromJWT = (req) => {
 //jwt.verify(token, "secretWord"
 //.send(data))
 const getAllTransfersByToken = (req, res) => {
-
     let tokenId = getIdFromJWT(req);
-
     //db.getCollection('users').find({"_id": "ObjectId(627cd0f54ce67d82eeb46f6b)" }
-    const transfers = Transfer.find({$or:[{senderId: tokenId}, {receiverId: tokenId}]} , function (err, docs) {
+    Transfer.find({$or:[{senderId: tokenId}, {receiverId: tokenId}]} , function (err, docs) {
         if (err){
             const response = {
                 status: "error",
@@ -65,11 +63,9 @@ const getAllTransfersByToken = (req, res) => {
                         transfer: docs
                     }        
                 }
-                console.log("First function call : ", docs);
-                res.json(response);
-            }
-        })
         }
+    })
+}
 
 const create = (req, res) => {
     let senderId = getIdFromJWT(req);
