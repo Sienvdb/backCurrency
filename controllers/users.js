@@ -14,18 +14,28 @@ const signup =  async (req, res) => {
     user.password = req.body.password;
     user.coins = 100;
 
+    const checkUsername = await User.findOne({ username: req.body.username});
+
     if(user.password == "") {
         return res.json({
             status: "error",
             message: "Password can't be empty"
         });
     } 
+
     //generate salt to hash password
     const salt = await bcrypt.genSalt(10);
 
     //set user password to hashed password
     user.password = await bcrypt.hash(user.password, salt);
 
+    //check if username is already in use
+    if(checkUsername) {
+        return res.json({
+            status: "error",
+            message: "This username is already in use, choose another one"
+        });
+    }
     //check to make sure email is Thomas More email
     if(!user.email.includes("@student.thomasmore.be")) {
         res.json({
@@ -150,4 +160,3 @@ module.exports.login = login;
 module.exports.signup = signup;
 module.exports.getIdByUsername = getIdByUsername;
 module.exports.getValuesByToken = getValuesByToken;
-
