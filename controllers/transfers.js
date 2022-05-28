@@ -63,6 +63,7 @@ const getAllTransfersByToken = (req, res) => {
                         transfer: docs
                     }        
                 }
+            res.json(response);
         }
     })
 }
