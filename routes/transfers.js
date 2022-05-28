@@ -5,7 +5,7 @@ const page = require('./../middleware/pagination');
 const transfersController = require("./../controllers/transfers");
 
 router.get("/transfers", transfersController.getAllTransfersByToken);
-router.get("/transfers/paginate", page.paginatedResults(transfers), transfersController.getAllTransfersByToken);
+router.get("/transfers/paginate", transfersController.getAllTransfersByToken);
 router.post("/transfers", transfersController.create);
 router.get("/transfers", transfersController.getTransferId);
 router.get("/getCoins", passport.authenticate('jwt', {session: false}), transfersController.getCoins);
