@@ -145,9 +145,15 @@ const getValuesByToken = async (req, res) => {
     }
 };
 
+const checkUsername = async (req, res) => {
+    
+
+}
+
 
 module.exports.login = login;
 module.exports.signup = signup;
 module.exports.getIdByUsername = getIdByUsername;
 module.exports.getValuesByToken = getValuesByToken;
+module.exports.checkUsername = checkUsername;
 
