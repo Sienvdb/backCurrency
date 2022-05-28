@@ -1,7 +1,7 @@
 const Primus = require('primus');
 
 let go = (server) => {
-    let primus = new Primus(server, {});
+    let primus = new Primus("http://localhost:3000/index.html", {});
     //primus.save(__dirname +'/primuslib.js')
 
     primus.on('connection', (spark) => {
