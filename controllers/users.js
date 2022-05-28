@@ -14,18 +14,28 @@ const signup =  async (req, res) => {
     user.password = req.body.password;
     user.coins = 100;
 
+    const checkUsername = await User.findOne({ username: req.body.username});
+
     if(user.password == "") {
         return res.json({
             status: "error",
             message: "Password can't be empty"
         });
     } 
+
     //generate salt to hash password
     const salt = await bcrypt.genSalt(10);
 
     //set user password to hashed password
     user.password = await bcrypt.hash(user.password, salt);
 
+    //check if username is already in use
+    if(checkUsername) {
+        return res.json({
+            status: "error",
+            message: "This username is already in use, choose another one"
+        });
+    }
     //check to make sure email is Thomas More email
     if(!user.email.includes("@student.thomasmore.be")) {
         res.json({
@@ -145,33 +155,8 @@ const getValuesByToken = async (req, res) => {
     }
 };
 
-const checkUsername = async (req, res) => {
-    const user = User.findOne({ username: req.query.username}, function (err, docs) {
-        if (err){
-            res.json({
-                status: "error",
-                message: "Something went wrong"
-            });
-        }
-        if(user){
-            res.json({
-                status: "error",
-                message: "User already exists"
-            });
-        } else {
-            res.json({
-                status: "success",
-                message: "User doesn't exist"
-            });
-        }
-    })
-
-}
-
 
 module.exports.login = login;
 module.exports.signup = signup;
 module.exports.getIdByUsername = getIdByUsername;
 module.exports.getValuesByToken = getValuesByToken;
-module.exports.checkUsername = checkUsername;
-
