@@ -96,21 +96,18 @@ const create = (req, res) => {
             message: "You don't have enough coins to make such a big transfer",
         })
     }else{
-        console.log("ok1")
 
         if (req.body.receiver && req.body.coins) {
-            transfer.save((err, doc) => {
+            transfer.save((err, docs) => {
                 if (!err) {
                     User.findByIdAndUpdate(req.body.senderId, {$inc:{"coins": -req.body.coins}} , (err, doc) => {
                         if (!err) {
-                            console.log("ok5")
                             User.findByIdAndUpdate(req.body.receiverId, { $inc: { "coins": req.body.coins } }, (err, doc) => {
                                 if (!err) {
-                                    console.log("ok6")
                                     res.json({
                                         status: "success",
                                         data:{
-                                            transfer: doc
+                                            transfer: docs
                                         }
                                     });
                                 }else{
