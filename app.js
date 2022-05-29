@@ -17,6 +17,7 @@ mongoose.connect('mongodb+srv://adminCurrency:9876adminCurrency54321@backcurrenc
 var app = express();
 const port = process.env.PORT || 3001;
 
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
